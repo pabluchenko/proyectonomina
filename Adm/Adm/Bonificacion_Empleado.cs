@@ -12,10 +12,13 @@ namespace Adm
     using System;
     using System.Collections.Generic;
     
-    public partial class Concepto
+    public partial class Bonificacion_Empleado
     {
-        public int Id_Concepto { get; set; }
-        public string Descripcion { get; set; }
-        public string Tipo { get; set; }
+        public int Empleado_Id { get; set; }
+        public int Id_Bonificacion { get; set; }
+        public string Nombre_Hijo { get; set; }
+        public System.DateTime Fecha_Nacimiento_Hijo { get; set; }
+    
+        public virtual Empleado Empleado { get; set; }
     }
 }
