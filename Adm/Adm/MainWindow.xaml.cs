@@ -20,7 +20,7 @@ namespace Adm
     /// </summary>
     public partial class MainWindow : Window
     {
-        NominaEntities db;
+        //NominaEntities db;
 
         public MainWindow()
         {
@@ -42,10 +42,10 @@ namespace Adm
             //c.Descripcion = "Premio";
             //c.Tipo = "+";
 
-            //db.Concepto.Add(c);
+           // db.Concepto.Add(c);
             //db.SaveChanges();
 
-            lstConceptos.ItemsSource = db.Concepto.ToList();
+            //lstConceptos.ItemsSource = db.Concepto.ToList();
         }
     }
 }
