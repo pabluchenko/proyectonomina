@@ -98,8 +98,11 @@
     <Compile Include="Vacaciones.cs">
       <DependentUpon>ModeloDatos.tt</DependentUpon>
     </Compile>
-    <Compile Include="W_RegistrarTurno.xaml.cs">
-      <DependentUpon>W_RegistrarTurno.xaml</DependentUpon>
+    <Compile Include="VentanaTest.xaml.cs">
+      <DependentUpon>VentanaTest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowEmpleado.xaml.cs">
+      <DependentUpon>WindowEmpleado.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -113,7 +116,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="W_RegistrarTurno.xaml">
+    <Page Include="VentanaTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowEmpleado.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
