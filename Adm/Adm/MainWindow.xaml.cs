@@ -35,7 +35,7 @@ namespace Adm
              https://www.csharp-console-examples.com/wpf/wpf-entity-framework-select-insert-update-delete/
              */
 
-            //db = new NominaEntities();
+            db = new NominaEntities();
 
 
             //Concepto c = new Concepto();
@@ -43,7 +43,13 @@ namespace Adm
             //c.Tipo = "+";
 
             //db.Concepto.Add(c);
+
             //db.SaveChanges();
+
+            //Pasos para actualizar via GitHub
+            //1- primero commit--confirmar (localmente)
+            //2- Luego Pull--Extraer(p/ obtener los ultimos cambios del repositorio)
+            //3- Push--Insertar (para enviar al repositorio remoto los cambios)
 
             lstConceptos.ItemsSource = db.Concepto.ToList();
         }

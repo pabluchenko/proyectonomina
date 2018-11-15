@@ -11,7 +11,7 @@ namespace Adm
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Anticipo
     {
         public int Id_Anticipo { get; set; }
@@ -22,7 +22,11 @@ namespace Adm
         public string Estado { get; set; }
         public Nullable<System.DateTime> Fecha_Definicion { get; set; }
         public string Observaciones { get; set; }
-    
+
         public virtual Empleado Empleado { get; set; }
+
+        
+
+
     }
 }
