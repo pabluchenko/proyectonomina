@@ -20,7 +20,7 @@ namespace Adm
     /// </summary>
     public partial class MainWindow : Window
     {
-        NominaEntities db;
+        //NominaEntities db;
 
         public MainWindow()
         {
@@ -42,16 +42,25 @@ namespace Adm
             //c.Descripcion = "Premio";
             //c.Tipo = "+";
 
-            //db.Concepto.Add(c);
-
+           // db.Concepto.Add(c);
             //db.SaveChanges();
 
-            //Pasos para actualizar via GitHub
-            //1- primero commit--confirmar (localmente)
-            //2- Luego Pull--Extraer(p/ obtener los ultimos cambios del repositorio)
-            //3- Push--Insertar (para enviar al repositorio remoto los cambios)
+            //lstConceptos.ItemsSource = db.Concepto.ToList();
+            //lstConceptos.ItemsSource = db.Concepto.ToList();
 
-            lstConceptos.ItemsSource = db.Concepto.ToList();
+            dgPrueba.ItemsSource = db.Concepto.ToList();
+        }
+
+        private void dgPrueba_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(dgPrueba.SelectedItem.GetType() == typeof(Concepto))
+            {
+                Concepto c = (Concepto)dgPrueba.SelectedItem;
+            }
+            else
+            {
+                MessageBox.Show("Nada Seleccionado");
+            }
         }
     }
 }
