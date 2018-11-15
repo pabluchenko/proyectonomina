@@ -12,10 +12,12 @@ namespace Adm
     using System;
     using System.Collections.Generic;
     
-    public partial class Concepto
+    public partial class Parametros_Sistema
     {
-        public int Id_Concepto { get; set; }
-        public string Descripcion { get; set; }
-        public string Tipo { get; set; }
+        public int Salario_Minimo_Vigente { get; set; }
+        public string Mes_Anho_Salario_Minimo_Vigente { get; set; }
+        public byte Porcentaje_Obrero_IPS { get; set; }
+        public byte Porcentaje_Patronal_IPS { get; set; }
+        public int Id_Parametros { get; set; }
     }
 }

@@ -20,6 +20,7 @@ namespace Adm
             this.Anticipo = new HashSet<Anticipo>();
             this.Permisos = new HashSet<Permisos>();
             this.Vacaciones = new HashSet<Vacaciones>();
+            this.Bonificacion_Empleado = new HashSet<Bonificacion_Empleado>();
         }
     
         public int Id_Empleado { get; set; }
@@ -34,6 +35,7 @@ namespace Adm
         public string Imagen_Perfil { get; set; }
         public string Estado_Civil { get; set; }
         public int Salario_Basico { get; set; }
+        public Nullable<int> Turno_Id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Anticipo> Anticipo { get; set; }
@@ -41,5 +43,8 @@ namespace Adm
         public virtual ICollection<Permisos> Permisos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Vacaciones> Vacaciones { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Bonificacion_Empleado> Bonificacion_Empleado { get; set; }
+        public virtual Turno Turno { get; set; }
     }
 }

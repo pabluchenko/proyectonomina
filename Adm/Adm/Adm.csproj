@@ -75,6 +75,9 @@
     <Compile Include="Anticipo.cs">
       <DependentUpon>ModeloDatos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Bonificacion_Empleado.cs">
+      <DependentUpon>ModeloDatos.tt</DependentUpon>
+    </Compile>
     <Compile Include="Concepto.cs">
       <DependentUpon>ModeloDatos.tt</DependentUpon>
     </Compile>
@@ -84,6 +87,9 @@
     <Compile Include="ModeloDatos.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>ModeloDatos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Parametros_Sistema.cs">
       <DependentUpon>ModeloDatos.tt</DependentUpon>
     </Compile>
     <Compile Include="Permisos.cs">
