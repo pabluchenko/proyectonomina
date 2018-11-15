@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="NominaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="NominaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Anticipo">
           <Key>
             <PropertyRef Name="Id_Anticipo" />
@@ -17,6 +17,16 @@
           <Property Name="Estado" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Fecha_Definicion" Type="date" />
           <Property Name="Observaciones" Type="varchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="Bonificacion_Empleado">
+          <Key>
+            <PropertyRef Name="Empleado_Id" />
+            <PropertyRef Name="Id_Bonificacion" />
+          </Key>
+          <Property Name="Empleado_Id" Type="int" Nullable="false" />
+          <Property Name="Id_Bonificacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre_Hijo" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Fecha_Nacimiento_Hijo" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Concepto">
           <Key>
@@ -42,6 +52,17 @@
           <Property Name="Imagen_Perfil" Type="varchar" MaxLength="1000" />
           <Property Name="Estado_Civil" Type="varchar" MaxLength="50" />
           <Property Name="Salario_Basico" Type="int" Nullable="false" />
+          <Property Name="Turno_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Parametros_Sistema">
+          <Key>
+            <PropertyRef Name="Id_Parametros" />
+          </Key>
+          <Property Name="Id_Parametros" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Salario_Minimo_Vigente" Type="int" Nullable="false" />
+          <Property Name="Mes_Anho_Salario_Minimo_Vigente" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="Porcentaje_Obrero_IPS" Type="tinyint" Nullable="false" />
+          <Property Name="Porcentaje_Patronal_IPS" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="Permisos">
           <Key>
@@ -99,6 +120,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Bonificacion_Empleado_Empleado">
+          <End Role="Empleado" Type="Self.Empleado" Multiplicity="1" />
+          <End Role="Bonificacion_Empleado" Type="Self.Bonificacion_Empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleado">
+              <PropertyRef Name="Id_Empleado" />
+            </Principal>
+            <Dependent Role="Bonificacion_Empleado">
+              <PropertyRef Name="Empleado_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Empleado_Turno">
+          <End Role="Turno" Type="Self.Turno" Multiplicity="0..1" />
+          <End Role="Empleado" Type="Self.Empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Turno">
+              <PropertyRef Name="Id_Turno" />
+            </Principal>
+            <Dependent Role="Empleado">
+              <PropertyRef Name="Turno_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Permisos_Empleado">
           <End Role="Empleado" Type="Self.Empleado" Multiplicity="1" />
           <End Role="Permisos" Type="Self.Permisos" Multiplicity="*" />
@@ -125,8 +170,10 @@
         </Association>
         <EntityContainer Name="NominaModelStoreContainer">
           <EntitySet Name="Anticipo" EntityType="Self.Anticipo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bonificacion_Empleado" EntityType="Self.Bonificacion_Empleado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Concepto" EntityType="Self.Concepto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Empleado" EntityType="Self.Empleado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Parametros_Sistema" EntityType="Self.Parametros_Sistema" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permisos" EntityType="Self.Permisos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Turno" EntityType="Self.Turno" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
@@ -134,6 +181,14 @@
           <AssociationSet Name="FK_Anticipo_Empleado" Association="Self.FK_Anticipo_Empleado">
             <End Role="Empleado" EntitySet="Empleado" />
             <End Role="Anticipo" EntitySet="Anticipo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bonificacion_Empleado_Empleado" Association="Self.FK_Bonificacion_Empleado_Empleado">
+            <End Role="Empleado" EntitySet="Empleado" />
+            <End Role="Bonificacion_Empleado" EntitySet="Bonificacion_Empleado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Empleado_Turno" Association="Self.FK_Empleado_Turno">
+            <End Role="Turno" EntitySet="Turno" />
+            <End Role="Empleado" EntitySet="Empleado" />
           </AssociationSet>
           <AssociationSet Name="FK_Permisos_Empleado" Association="Self.FK_Permisos_Empleado">
             <End Role="Empleado" EntitySet="Empleado" />
@@ -144,8 +199,7 @@
             <End Role="Vacaciones" EntitySet="Vacaciones" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="NominaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -190,6 +244,9 @@
           <NavigationProperty Name="Anticipo" Relationship="Self.FK_Anticipo_Empleado" FromRole="Empleado" ToRole="Anticipo" />
           <NavigationProperty Name="Permisos" Relationship="Self.FK_Permisos_Empleado" FromRole="Empleado" ToRole="Permisos" />
           <NavigationProperty Name="Vacaciones" Relationship="Self.FK_Vacaciones_Empleado" FromRole="Empleado" ToRole="Vacaciones" />
+          <Property Name="Turno_Id" Type="Int32" />
+          <NavigationProperty Name="Bonificacion_Empleado" Relationship="NominaModel.FK_Bonificacion_Empleado_Empleado" FromRole="Empleado" ToRole="Bonificacion_Empleado" />
+          <NavigationProperty Name="Turno" Relationship="NominaModel.FK_Empleado_Turno" FromRole="Empleado" ToRole="Turno" />
         </EntityType>
         <EntityType Name="Permisos">
           <Key>
@@ -214,6 +271,7 @@
           <Property Name="Hora_Entrada" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Hora_Salida" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Observaciones" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Empleado" Relationship="NominaModel.FK_Empleado_Turno" FromRole="Turno" ToRole="Empleado" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -293,7 +351,66 @@
             <End Role="Empleado" EntitySet="Empleado" />
             <End Role="Vacaciones" EntitySet="Vacaciones" />
           </AssociationSet>
+          <EntitySet Name="Bonificacion_Empleado" EntityType="NominaModel.Bonificacion_Empleado" />
+          <EntitySet Name="Parametros_Sistema" EntityType="NominaModel.Parametros_Sistema" />
+          <AssociationSet Name="FK_Bonificacion_Empleado_Empleado" Association="NominaModel.FK_Bonificacion_Empleado_Empleado">
+            <End Role="Empleado" EntitySet="Empleado" />
+            <End Role="Bonificacion_Empleado" EntitySet="Bonificacion_Empleado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Empleado_Turno" Association="NominaModel.FK_Empleado_Turno">
+            <End Role="Turno" EntitySet="Turno" />
+            <End Role="Empleado" EntitySet="Empleado" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Bonificacion_Empleado">
+          <Key>
+            <PropertyRef Name="Empleado_Id" />
+            <PropertyRef Name="Id_Bonificacion" />
+          </Key>
+          <Property Name="Empleado_Id" Type="Int32" Nullable="false" />
+          <Property Name="Id_Bonificacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre_Hijo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Nacimiento_Hijo" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Empleado" Relationship="NominaModel.FK_Bonificacion_Empleado_Empleado" FromRole="Bonificacion_Empleado" ToRole="Empleado" />
+        </EntityType>
+        <EntityType Name="Parametros_Sistema">
+          <Key>
+            <PropertyRef Name="Salario_Minimo_Vigente" />
+            <PropertyRef Name="Mes_Anho_Salario_Minimo_Vigente" />
+            <PropertyRef Name="Porcentaje_Obrero_IPS" />
+            <PropertyRef Name="Porcentaje_Patronal_IPS" />
+            <PropertyRef Name="Id_Parametros" />
+          </Key>
+          <Property Name="Salario_Minimo_Vigente" Type="Int32" Nullable="false" />
+          <Property Name="Mes_Anho_Salario_Minimo_Vigente" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="Porcentaje_Obrero_IPS" Type="Byte" Nullable="false" />
+          <Property Name="Porcentaje_Patronal_IPS" Type="Byte" Nullable="false" />
+          <Property Name="Id_Parametros" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <Association Name="FK_Bonificacion_Empleado_Empleado">
+          <End Type="NominaModel.Empleado" Role="Empleado" Multiplicity="1" />
+          <End Type="NominaModel.Bonificacion_Empleado" Role="Bonificacion_Empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleado">
+              <PropertyRef Name="Id_Empleado" />
+            </Principal>
+            <Dependent Role="Bonificacion_Empleado">
+              <PropertyRef Name="Empleado_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Empleado_Turno">
+          <End Type="NominaModel.Turno" Role="Turno" Multiplicity="0..1" />
+          <End Type="NominaModel.Empleado" Role="Empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Turno">
+              <PropertyRef Name="Id_Turno" />
+            </Principal>
+            <Dependent Role="Empleado">
+              <PropertyRef Name="Turno_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -326,6 +443,7 @@
           <EntitySetMapping Name="Empleado">
             <EntityTypeMapping TypeName="NominaModel.Empleado">
               <MappingFragment StoreEntitySet="Empleado">
+                <ScalarProperty Name="Turno_Id" ColumnName="Turno_Id" />
                 <ScalarProperty Name="Id_Empleado" ColumnName="Id_Empleado" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
                 <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
@@ -386,6 +504,27 @@
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="Fecha_Definicion" ColumnName="Fecha_Definicion" />
                 <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bonificacion_Empleado">
+            <EntityTypeMapping TypeName="NominaModel.Bonificacion_Empleado">
+              <MappingFragment StoreEntitySet="Bonificacion_Empleado">
+                <ScalarProperty Name="Fecha_Nacimiento_Hijo" ColumnName="Fecha_Nacimiento_Hijo" />
+                <ScalarProperty Name="Nombre_Hijo" ColumnName="Nombre_Hijo" />
+                <ScalarProperty Name="Id_Bonificacion" ColumnName="Id_Bonificacion" />
+                <ScalarProperty Name="Empleado_Id" ColumnName="Empleado_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parametros_Sistema">
+            <EntityTypeMapping TypeName="NominaModel.Parametros_Sistema">
+              <MappingFragment StoreEntitySet="Parametros_Sistema">
+                <ScalarProperty Name="Id_Parametros" ColumnName="Id_Parametros" />
+                <ScalarProperty Name="Porcentaje_Patronal_IPS" ColumnName="Porcentaje_Patronal_IPS" />
+                <ScalarProperty Name="Porcentaje_Obrero_IPS" ColumnName="Porcentaje_Obrero_IPS" />
+                <ScalarProperty Name="Mes_Anho_Salario_Minimo_Vigente" ColumnName="Mes_Anho_Salario_Minimo_Vigente" />
+                <ScalarProperty Name="Salario_Minimo_Vigente" ColumnName="Salario_Minimo_Vigente" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

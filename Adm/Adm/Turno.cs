@@ -14,6 +14,12 @@ namespace Adm
     
     public partial class Turno
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Turno()
+        {
+            this.Empleado = new HashSet<Empleado>();
+        }
+    
         public int Id_Turno { get; set; }
         public string Hora_Entrada { get; set; }
         public string Hora_Salida { get; set; }

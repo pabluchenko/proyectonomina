@@ -32,5 +32,7 @@ namespace Adm
         public virtual DbSet<Turno> Turno { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<Vacaciones> Vacaciones { get; set; }
+        public virtual DbSet<Bonificacion_Empleado> Bonificacion_Empleado { get; set; }
+        public virtual DbSet<Parametros_Sistema> Parametros_Sistema { get; set; }
     }
 }

@@ -8,5 +8,6 @@
         Title="MainWindow" Height="350" Width="525" Loaded="Window_Loaded">
     <Grid>
         <ListBox Name="lstConceptos"></ListBox>
+        <DataGrid Name="dgPrueba" SelectionChanged="dgPrueba_SelectionChanged" SelectionMode="Single"></DataGrid>
     </Grid>
 </Window>

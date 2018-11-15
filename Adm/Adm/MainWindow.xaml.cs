@@ -35,7 +35,7 @@ namespace Adm
              https://www.csharp-console-examples.com/wpf/wpf-entity-framework-select-insert-update-delete/
              */
 
-            //db = new NominaEntities();
+            db = new NominaEntities();
 
 
             //Concepto c = new Concepto();
@@ -46,6 +46,21 @@ namespace Adm
             //db.SaveChanges();
 
             //lstConceptos.ItemsSource = db.Concepto.ToList();
+            //lstConceptos.ItemsSource = db.Concepto.ToList();
+
+            dgPrueba.ItemsSource = db.Concepto.ToList();
+        }
+
+        private void dgPrueba_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(dgPrueba.SelectedItem.GetType() == typeof(Concepto))
+            {
+                Concepto c = (Concepto)dgPrueba.SelectedItem;
+            }
+            else
+            {
+                MessageBox.Show("Nada Seleccionado");
+            }
         }
     }
 }
