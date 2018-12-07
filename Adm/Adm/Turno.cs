@@ -24,11 +24,8 @@ namespace Adm
         public string Hora_Entrada { get; set; }
         public string Hora_Salida { get; set; }
         public string Observaciones { get; set; }
-
-        public override string ToString()
-        {
-            return " DE: " + this.Hora_Entrada + "  A: " + this.Hora_Salida;
-        }
-    }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Empleado> Empleado { get; set; }
+    }
 }

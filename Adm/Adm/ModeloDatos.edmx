@@ -375,17 +375,13 @@
         </EntityType>
         <EntityType Name="Parametros_Sistema">
           <Key>
-            <PropertyRef Name="Salario_Minimo_Vigente" />
-            <PropertyRef Name="Mes_Anho_Salario_Minimo_Vigente" />
-            <PropertyRef Name="Porcentaje_Obrero_IPS" />
-            <PropertyRef Name="Porcentaje_Patronal_IPS" />
             <PropertyRef Name="Id_Parametros" />
           </Key>
+          <Property Name="Id_Parametros" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" />
           <Property Name="Salario_Minimo_Vigente" Type="Int32" Nullable="false" />
           <Property Name="Mes_Anho_Salario_Minimo_Vigente" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
           <Property Name="Porcentaje_Obrero_IPS" Type="Byte" Nullable="false" />
           <Property Name="Porcentaje_Patronal_IPS" Type="Byte" Nullable="false" />
-          <Property Name="Id_Parametros" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <Association Name="FK_Bonificacion_Empleado_Empleado">
           <End Type="NominaModel.Empleado" Role="Empleado" Multiplicity="1" />
