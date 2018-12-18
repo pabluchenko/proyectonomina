@@ -21,6 +21,7 @@ namespace WebEmpleados.Models
             this.Bonificacion_Empleado = new HashSet<Bonificacion_Empleado>();
             this.Permisos = new HashSet<Permisos>();
             this.Vacaciones = new HashSet<Vacaciones>();
+            this.AspNetUsers = new HashSet<AspNetUsers>();
         }
     
         public int Id_Empleado { get; set; }
@@ -46,5 +47,7 @@ namespace WebEmpleados.Models
         public virtual ICollection<Permisos> Permisos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Vacaciones> Vacaciones { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AspNetUsers> AspNetUsers { get; set; }
     }
 }

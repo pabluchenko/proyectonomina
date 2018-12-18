@@ -115,6 +115,14 @@
           <Property Name="Salario_Basico" Type="int" Nullable="false" />
           <Property Name="Turno_Id" Type="int" />
         </EntityType>
+        <EntityType Name="Empleado_AspUser">
+          <Key>
+            <PropertyRef Name="Id_mapeo" />
+          </Key>
+          <Property Name="Id_mapeo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Empleado_Id" Type="int" Nullable="false" />
+          <Property Name="Asp_User_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
         <EntityType Name="Parametros_Sistema">
           <Key>
             <PropertyRef Name="Id_Parametros" />
@@ -249,6 +257,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Empleado_AspUser_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Empleado_AspUser" Type="Self.Empleado_AspUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Empleado_AspUser">
+              <PropertyRef Name="Asp_User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Empleado_AspUser_Empleado">
+          <End Role="Empleado" Type="Self.Empleado" Multiplicity="1" />
+          <End Role="Empleado_AspUser" Type="Self.Empleado_AspUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleado">
+              <PropertyRef Name="Id_Empleado" />
+            </Principal>
+            <Dependent Role="Empleado_AspUser">
+              <PropertyRef Name="Empleado_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Empleado_Turno">
           <End Role="Turno" Type="Self.Turno" Multiplicity="0..1" />
           <End Role="Empleado" Type="Self.Empleado" Multiplicity="*" />
@@ -296,6 +328,7 @@
           <EntitySet Name="Bonificacion_Empleado" EntityType="Self.Bonificacion_Empleado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Concepto" EntityType="Self.Concepto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Empleado" EntityType="Self.Empleado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Empleado_AspUser" EntityType="Self.Empleado_AspUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Parametros_Sistema" EntityType="Self.Parametros_Sistema" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permisos" EntityType="Self.Permisos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Turno" EntityType="Self.Turno" Schema="dbo" store:Type="Tables" />
@@ -324,6 +357,14 @@
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Empleado_AspUser_AspNetUsers" Association="Self.FK_Empleado_AspUser_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Empleado_AspUser" EntitySet="Empleado_AspUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Empleado_AspUser_Empleado" Association="Self.FK_Empleado_AspUser_Empleado">
+            <End Role="Empleado" EntitySet="Empleado" />
+            <End Role="Empleado_AspUser" EntitySet="Empleado_AspUser" />
           </AssociationSet>
           <AssociationSet Name="FK_Empleado_Turno" Association="Self.FK_Empleado_Turno">
             <End Role="Turno" EntitySet="Turno" />
@@ -397,6 +438,7 @@
           <NavigationProperty Name="Turno" Relationship="Self.FK_Empleado_Turno" FromRole="Empleado" ToRole="Turno" />
           <NavigationProperty Name="Permisos" Relationship="Self.FK_Permisos_Empleado" FromRole="Empleado" ToRole="Permisos" />
           <NavigationProperty Name="Vacaciones" Relationship="Self.FK_Vacaciones_Empleado" FromRole="Empleado" ToRole="Vacaciones" />
+          <NavigationProperty Name="AspNetUsers" Relationship="NominaModel.Empleado_AspUser" FromRole="Empleado" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="Parametros_Sistema">
           <Key>
@@ -562,6 +604,10 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <AssociationSet Name="Empleado_AspUser" Association="NominaModel.Empleado_AspUser">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Empleado" EntitySet="Empleado" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -621,6 +667,7 @@
           <NavigationProperty Name="AspNetUserClaims" Relationship="NominaModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="NominaModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="AspNetRoles" Relationship="NominaModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <NavigationProperty Name="Empleado" Relationship="NominaModel.Empleado_AspUser" FromRole="AspNetUsers" ToRole="Empleado" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Type="NominaModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
@@ -653,6 +700,10 @@
         <Association Name="AspNetUserRoles">
           <End Type="NominaModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
           <End Type="NominaModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
+        </Association>
+        <Association Name="Empleado_AspUser">
+          <End Type="NominaModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
+          <End Type="NominaModel.Empleado" Role="Empleado" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -832,6 +883,14 @@
             </EndProperty>
             <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Empleado_AspUser" TypeName="NominaModel.Empleado_AspUser" StoreEntitySet="Empleado_AspUser">
+            <EndProperty Name="Empleado">
+              <ScalarProperty Name="Id_Empleado" ColumnName="Empleado_Id" />
+            </EndProperty>
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="Asp_User_Id" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>
