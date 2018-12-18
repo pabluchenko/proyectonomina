@@ -19,6 +19,14 @@
         <AssociationConnector Association="NominaModel.FK_Empleado_Turno" ManuallyRouted="false" />
         <AssociationConnector Association="NominaModel.FK_Permisos_Empleado" ManuallyRouted="false" />
         <AssociationConnector Association="NominaModel.FK_Vacaciones_Empleado" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="NominaModel.C__MigrationHistory" Width="1.5" PointX="10.375" PointY="0.75" />
+        <EntityTypeShape EntityType="NominaModel.AspNetRoles" Width="1.5" PointX="7.375" PointY="8.5" />
+        <EntityTypeShape EntityType="NominaModel.AspNetUserClaims" Width="1.5" PointX="11.875" PointY="7" />
+        <EntityTypeShape EntityType="NominaModel.AspNetUserLogins" Width="1.5" PointX="11.875" PointY="9.75" />
+        <EntityTypeShape EntityType="NominaModel.AspNetUsers" Width="1.5" PointX="9.625" PointY="7.375" />
+        <AssociationConnector Association="NominaModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="NominaModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="NominaModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
