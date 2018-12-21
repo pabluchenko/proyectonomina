@@ -12,18 +12,12 @@ namespace WebEmpleados.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Permisos
+    public partial class sysdiagrams
     {
-        public int Id_Permiso { get; set; }
-        public int Empleado_Id { get; set; }
-        public System.DateTime Fecha_Desde { get; set; }
-        public System.DateTime Fecha_Hasta { get; set; }
-        public string Motivo { get; set; }
-        public int Cantidad_Horas { get; set; }
-        public System.DateTime Fecha_Solicitud { get; set; }
-        public string Estado { get; set; }
-        public string Observaciones { get; set; }
-    
-        public virtual Empleado Empleado { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

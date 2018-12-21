@@ -122,6 +122,8 @@
           <Property Name="Id_mapeo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Empleado_Id" Type="int" Nullable="false" />
           <Property Name="Asp_User_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="observacion" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Parametros_Sistema">
           <Key>
@@ -146,6 +148,16 @@
           <Property Name="Fecha_Solicitud" Type="date" Nullable="false" />
           <Property Name="Estado" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Observaciones" Type="varchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Turno">
           <Key>
@@ -331,6 +343,7 @@
           <EntitySet Name="Empleado_AspUser" EntityType="Self.Empleado_AspUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Parametros_Sistema" EntityType="Self.Parametros_Sistema" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permisos" EntityType="Self.Permisos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Turno" EntityType="Self.Turno" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vacaciones" EntityType="Self.Vacaciones" Schema="dbo" store:Type="Tables" />
@@ -383,215 +396,27 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="NominaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Anticipo">
-          <Key>
-            <PropertyRef Name="Id_Anticipo" />
-          </Key>
-          <Property Name="Id_Anticipo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Empleado_Id" Type="Int32" Nullable="false" />
-          <Property Name="Monto_Solicitado" Type="Int32" Nullable="false" />
-          <Property Name="Monto_Aprobado" Type="Int32" Nullable="false" />
-          <Property Name="Fecha_Solicitud" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Fecha_Definicion" Type="DateTime" Precision="0" />
-          <Property Name="Observaciones" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Empleado" Relationship="Self.FK_Anticipo_Empleado" FromRole="Anticipo" ToRole="Empleado" />
-        </EntityType>
-        <EntityType Name="Bonificacion_Empleado">
-          <Key>
-            <PropertyRef Name="Empleado_Id" />
-            <PropertyRef Name="Id_Bonificacion" />
-          </Key>
-          <Property Name="Empleado_Id" Type="Int32" Nullable="false" />
-          <Property Name="Id_Bonificacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre_Hijo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Fecha_Nacimiento_Hijo" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Empleado" Relationship="Self.FK_Bonificacion_Empleado_Empleado" FromRole="Bonificacion_Empleado" ToRole="Empleado" />
-        </EntityType>
-        <EntityType Name="Concepto">
-          <Key>
-            <PropertyRef Name="Id_Concepto" />
-          </Key>
-          <Property Name="Id_Concepto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Tipo" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Empleado">
-          <Key>
-            <PropertyRef Name="Id_Empleado" />
-          </Key>
-          <Property Name="Id_Empleado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombres" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Apellidos" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Nro_Documento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Tipo_Documento" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Direccion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Nro_Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Fecha_Nacimiento" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Fecha_Incorporacion" Type="DateTime" Precision="0" />
-          <Property Name="Imagen_Perfil" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Estado_Civil" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Salario_Basico" Type="Int32" Nullable="false" />
-          <Property Name="Turno_Id" Type="Int32" />
-          <NavigationProperty Name="Anticipo" Relationship="Self.FK_Anticipo_Empleado" FromRole="Empleado" ToRole="Anticipo" />
-          <NavigationProperty Name="Bonificacion_Empleado" Relationship="Self.FK_Bonificacion_Empleado_Empleado" FromRole="Empleado" ToRole="Bonificacion_Empleado" />
-          <NavigationProperty Name="Turno" Relationship="Self.FK_Empleado_Turno" FromRole="Empleado" ToRole="Turno" />
-          <NavigationProperty Name="Permisos" Relationship="Self.FK_Permisos_Empleado" FromRole="Empleado" ToRole="Permisos" />
-          <NavigationProperty Name="Vacaciones" Relationship="Self.FK_Vacaciones_Empleado" FromRole="Empleado" ToRole="Vacaciones" />
-          <NavigationProperty Name="AspNetUsers" Relationship="NominaModel.Empleado_AspUser" FromRole="Empleado" ToRole="AspNetUsers" />
-        </EntityType>
-        <EntityType Name="Parametros_Sistema">
-          <Key>
-            <PropertyRef Name="Id_Parametros" />
-          </Key>
-          <Property Name="Id_Parametros" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Salario_Minimo_Vigente" Type="Int32" Nullable="false" />
-          <Property Name="Mes_Anho_Salario_Minimo_Vigente" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Porcentaje_Obrero_IPS" Type="Byte" Nullable="false" />
-          <Property Name="Porcentaje_Patronal_IPS" Type="Byte" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Permisos">
-          <Key>
-            <PropertyRef Name="Id_Permiso" />
-          </Key>
-          <Property Name="Id_Permiso" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Empleado_Id" Type="Int32" Nullable="false" />
-          <Property Name="Fecha_Desde" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Fecha_Hasta" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Motivo" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Cantidad_Horas" Type="Int32" Nullable="false" />
-          <Property Name="Fecha_Solicitud" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Observaciones" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Empleado" Relationship="Self.FK_Permisos_Empleado" FromRole="Permisos" ToRole="Empleado" />
-        </EntityType>
-        <EntityType Name="Turno">
-          <Key>
-            <PropertyRef Name="Id_Turno" />
-          </Key>
-          <Property Name="Id_Turno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Hora_Entrada" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Hora_Salida" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Observaciones" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Empleado" Relationship="Self.FK_Empleado_Turno" FromRole="Turno" ToRole="Empleado" />
-        </EntityType>
-        <EntityType Name="Usuario">
-          <Key>
-            <PropertyRef Name="Id_Usuario" />
-          </Key>
-          <Property Name="Id_Usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Usuario1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Vacaciones">
-          <Key>
-            <PropertyRef Name="Id_Vacaciones" />
-          </Key>
-          <Property Name="Id_Vacaciones" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Empleado_Id" Type="Int32" Nullable="false" />
-          <Property Name="Fecha_Desde" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Fecha_Hasta" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Fecha_Solicitud" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Fecha_Definicion" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Observaciones" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Empleado" Relationship="Self.FK_Vacaciones_Empleado" FromRole="Vacaciones" ToRole="Empleado" />
-        </EntityType>
-        <Association Name="FK_Anticipo_Empleado">
-          <End Role="Empleado" Type="Self.Empleado" Multiplicity="1" />
-          <End Role="Anticipo" Type="Self.Anticipo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Empleado">
-              <PropertyRef Name="Id_Empleado" />
-            </Principal>
-            <Dependent Role="Anticipo">
-              <PropertyRef Name="Empleado_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Bonificacion_Empleado_Empleado">
-          <End Role="Empleado" Type="Self.Empleado" Multiplicity="1" />
-          <End Role="Bonificacion_Empleado" Type="Self.Bonificacion_Empleado" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Empleado">
-              <PropertyRef Name="Id_Empleado" />
-            </Principal>
-            <Dependent Role="Bonificacion_Empleado">
-              <PropertyRef Name="Empleado_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Empleado_Turno">
-          <End Role="Turno" Type="Self.Turno" Multiplicity="0..1" />
-          <End Role="Empleado" Type="Self.Empleado" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Turno">
-              <PropertyRef Name="Id_Turno" />
-            </Principal>
-            <Dependent Role="Empleado">
-              <PropertyRef Name="Turno_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Permisos_Empleado">
-          <End Role="Empleado" Type="Self.Empleado" Multiplicity="1" />
-          <End Role="Permisos" Type="Self.Permisos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Empleado">
-              <PropertyRef Name="Id_Empleado" />
-            </Principal>
-            <Dependent Role="Permisos">
-              <PropertyRef Name="Empleado_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Vacaciones_Empleado">
-          <End Role="Empleado" Type="Self.Empleado" Multiplicity="1" />
-          <End Role="Vacaciones" Type="Self.Vacaciones" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Empleado">
-              <PropertyRef Name="Id_Empleado" />
-            </Principal>
-            <Dependent Role="Vacaciones">
-              <PropertyRef Name="Empleado_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="NominaEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Anticipo" EntityType="Self.Anticipo" />
-          <EntitySet Name="Bonificacion_Empleado" EntityType="Self.Bonificacion_Empleado" />
-          <EntitySet Name="Concepto" EntityType="Self.Concepto" />
-          <EntitySet Name="Empleado" EntityType="Self.Empleado" />
-          <EntitySet Name="Parametros_Sistema" EntityType="Self.Parametros_Sistema" />
-          <EntitySet Name="Permisos" EntityType="Self.Permisos" />
-          <EntitySet Name="Turno" EntityType="Self.Turno" />
-          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
-          <EntitySet Name="Vacaciones" EntityType="Self.Vacaciones" />
-          <AssociationSet Name="FK_Anticipo_Empleado" Association="Self.FK_Anticipo_Empleado">
-            <End Role="Empleado" EntitySet="Empleado" />
-            <End Role="Anticipo" EntitySet="Anticipo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Bonificacion_Empleado_Empleado" Association="Self.FK_Bonificacion_Empleado_Empleado">
-            <End Role="Empleado" EntitySet="Empleado" />
-            <End Role="Bonificacion_Empleado" EntitySet="Bonificacion_Empleado" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Empleado_Turno" Association="Self.FK_Empleado_Turno">
-            <End Role="Turno" EntitySet="Turno" />
-            <End Role="Empleado" EntitySet="Empleado" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Permisos_Empleado" Association="Self.FK_Permisos_Empleado">
-            <End Role="Empleado" EntitySet="Empleado" />
-            <End Role="Permisos" EntitySet="Permisos" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Vacaciones_Empleado" Association="Self.FK_Vacaciones_Empleado">
-            <End Role="Empleado" EntitySet="Empleado" />
-            <End Role="Vacaciones" EntitySet="Vacaciones" />
-          </AssociationSet>
           <EntitySet Name="C__MigrationHistory" EntityType="NominaModel.C__MigrationHistory" />
+          <EntitySet Name="Anticipo" EntityType="NominaModel.Anticipo" />
           <EntitySet Name="AspNetRoles" EntityType="NominaModel.AspNetRoles" />
           <EntitySet Name="AspNetUserClaims" EntityType="NominaModel.AspNetUserClaims" />
           <EntitySet Name="AspNetUserLogins" EntityType="NominaModel.AspNetUserLogins" />
           <EntitySet Name="AspNetUsers" EntityType="NominaModel.AspNetUsers" />
+          <EntitySet Name="Bonificacion_Empleado" EntityType="NominaModel.Bonificacion_Empleado" />
+          <EntitySet Name="Concepto" EntityType="NominaModel.Concepto" />
+          <EntitySet Name="Empleado" EntityType="NominaModel.Empleado" />
+          <EntitySet Name="Empleado_AspUser" EntityType="NominaModel.Empleado_AspUser" />
+          <EntitySet Name="Parametros_Sistema" EntityType="NominaModel.Parametros_Sistema" />
+          <EntitySet Name="Permisos" EntityType="NominaModel.Permisos" />
+          <EntitySet Name="sysdiagrams" EntityType="NominaModel.sysdiagrams" />
+          <EntitySet Name="Turno" EntityType="NominaModel.Turno" />
+          <EntitySet Name="Usuario" EntityType="NominaModel.Usuario" />
+          <EntitySet Name="Vacaciones" EntityType="NominaModel.Vacaciones" />
+          <AssociationSet Name="FK_Anticipo_Empleado" Association="NominaModel.FK_Anticipo_Empleado">
+            <End Role="Empleado" EntitySet="Empleado" />
+            <End Role="Anticipo" EntitySet="Anticipo" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="NominaModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -600,13 +425,33 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
           </AssociationSet>
+          <AssociationSet Name="FK_Empleado_AspUser_AspNetUsers" Association="NominaModel.FK_Empleado_AspUser_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Empleado_AspUser" EntitySet="Empleado_AspUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bonificacion_Empleado_Empleado" Association="NominaModel.FK_Bonificacion_Empleado_Empleado">
+            <End Role="Empleado" EntitySet="Empleado" />
+            <End Role="Bonificacion_Empleado" EntitySet="Bonificacion_Empleado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Empleado_AspUser_Empleado" Association="NominaModel.FK_Empleado_AspUser_Empleado">
+            <End Role="Empleado" EntitySet="Empleado" />
+            <End Role="Empleado_AspUser" EntitySet="Empleado_AspUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Empleado_Turno" Association="NominaModel.FK_Empleado_Turno">
+            <End Role="Turno" EntitySet="Turno" />
+            <End Role="Empleado" EntitySet="Empleado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Permisos_Empleado" Association="NominaModel.FK_Permisos_Empleado">
+            <End Role="Empleado" EntitySet="Empleado" />
+            <End Role="Permisos" EntitySet="Permisos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vacaciones_Empleado" Association="NominaModel.FK_Vacaciones_Empleado">
+            <End Role="Empleado" EntitySet="Empleado" />
+            <End Role="Vacaciones" EntitySet="Vacaciones" />
+          </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="NominaModel.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-          </AssociationSet>
-          <AssociationSet Name="Empleado_AspUser" Association="NominaModel.Empleado_AspUser">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Empleado" EntitySet="Empleado" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
@@ -618,6 +463,20 @@
           <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
           <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Anticipo">
+          <Key>
+            <PropertyRef Name="Id_Anticipo" />
+          </Key>
+          <Property Name="Id_Anticipo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Empleado_Id" Type="Int32" Nullable="false" />
+          <Property Name="Monto_Solicitado" Type="Int32" Nullable="false" />
+          <Property Name="Monto_Aprobado" Type="Int32" Nullable="false" />
+          <Property Name="Fecha_Solicitud" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Definicion" Type="DateTime" Precision="0" />
+          <Property Name="Observaciones" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Empleado" Relationship="NominaModel.FK_Anticipo_Empleado" FromRole="Anticipo" ToRole="Empleado" />
         </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -666,9 +525,143 @@
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="NominaModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="NominaModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="Empleado_AspUser" Relationship="NominaModel.FK_Empleado_AspUser_AspNetUsers" FromRole="AspNetUsers" ToRole="Empleado_AspUser" />
           <NavigationProperty Name="AspNetRoles" Relationship="NominaModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
-          <NavigationProperty Name="Empleado" Relationship="NominaModel.Empleado_AspUser" FromRole="AspNetUsers" ToRole="Empleado" />
         </EntityType>
+        <EntityType Name="Bonificacion_Empleado">
+          <Key>
+            <PropertyRef Name="Empleado_Id" />
+            <PropertyRef Name="Id_Bonificacion" />
+          </Key>
+          <Property Name="Empleado_Id" Type="Int32" Nullable="false" />
+          <Property Name="Id_Bonificacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre_Hijo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Nacimiento_Hijo" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Empleado" Relationship="NominaModel.FK_Bonificacion_Empleado_Empleado" FromRole="Bonificacion_Empleado" ToRole="Empleado" />
+        </EntityType>
+        <EntityType Name="Concepto">
+          <Key>
+            <PropertyRef Name="Id_Concepto" />
+          </Key>
+          <Property Name="Id_Concepto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Tipo" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Empleado">
+          <Key>
+            <PropertyRef Name="Id_Empleado" />
+          </Key>
+          <Property Name="Id_Empleado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Apellidos" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Nro_Documento" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Tipo_Documento" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Nro_Telefono" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Nacimiento" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Fecha_Incorporacion" Type="DateTime" Precision="0" />
+          <Property Name="Imagen_Perfil" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Estado_Civil" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Salario_Basico" Type="Int32" Nullable="false" />
+          <Property Name="Turno_Id" Type="Int32" />
+          <NavigationProperty Name="Anticipo" Relationship="NominaModel.FK_Anticipo_Empleado" FromRole="Empleado" ToRole="Anticipo" />
+          <NavigationProperty Name="Bonificacion_Empleado" Relationship="NominaModel.FK_Bonificacion_Empleado_Empleado" FromRole="Empleado" ToRole="Bonificacion_Empleado" />
+          <NavigationProperty Name="Empleado_AspUser" Relationship="NominaModel.FK_Empleado_AspUser_Empleado" FromRole="Empleado" ToRole="Empleado_AspUser" />
+          <NavigationProperty Name="Turno" Relationship="NominaModel.FK_Empleado_Turno" FromRole="Empleado" ToRole="Turno" />
+          <NavigationProperty Name="Permisos" Relationship="NominaModel.FK_Permisos_Empleado" FromRole="Empleado" ToRole="Permisos" />
+          <NavigationProperty Name="Vacaciones" Relationship="NominaModel.FK_Vacaciones_Empleado" FromRole="Empleado" ToRole="Vacaciones" />
+        </EntityType>
+        <EntityType Name="Empleado_AspUser">
+          <Key>
+            <PropertyRef Name="Id_mapeo" />
+          </Key>
+          <Property Name="Id_mapeo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Empleado_Id" Type="Int32" Nullable="false" />
+          <Property Name="Asp_User_Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="observacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="NominaModel.FK_Empleado_AspUser_AspNetUsers" FromRole="Empleado_AspUser" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Empleado" Relationship="NominaModel.FK_Empleado_AspUser_Empleado" FromRole="Empleado_AspUser" ToRole="Empleado" />
+        </EntityType>
+        <EntityType Name="Parametros_Sistema">
+          <Key>
+            <PropertyRef Name="Id_Parametros" />
+          </Key>
+          <Property Name="Id_Parametros" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Salario_Minimo_Vigente" Type="Int32" Nullable="false" />
+          <Property Name="Mes_Anho_Salario_Minimo_Vigente" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="Porcentaje_Obrero_IPS" Type="Byte" Nullable="false" />
+          <Property Name="Porcentaje_Patronal_IPS" Type="Byte" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Permisos">
+          <Key>
+            <PropertyRef Name="Id_Permiso" />
+          </Key>
+          <Property Name="Id_Permiso" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Empleado_Id" Type="Int32" Nullable="false" />
+          <Property Name="Fecha_Desde" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Fecha_Hasta" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Motivo" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Cantidad_Horas" Type="Int32" Nullable="false" />
+          <Property Name="Fecha_Solicitud" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Observaciones" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Empleado" Relationship="NominaModel.FK_Permisos_Empleado" FromRole="Permisos" ToRole="Empleado" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Turno">
+          <Key>
+            <PropertyRef Name="Id_Turno" />
+          </Key>
+          <Property Name="Id_Turno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Hora_Entrada" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Hora_Salida" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Observaciones" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Empleado" Relationship="NominaModel.FK_Empleado_Turno" FromRole="Turno" ToRole="Empleado" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id_Usuario" />
+          </Key>
+          <Property Name="Id_Usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Usuario1" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Vacaciones">
+          <Key>
+            <PropertyRef Name="Id_Vacaciones" />
+          </Key>
+          <Property Name="Id_Vacaciones" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Empleado_Id" Type="Int32" Nullable="false" />
+          <Property Name="Fecha_Desde" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Fecha_Hasta" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Fecha_Solicitud" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Definicion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Observaciones" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Empleado" Relationship="NominaModel.FK_Vacaciones_Empleado" FromRole="Vacaciones" ToRole="Empleado" />
+        </EntityType>
+        <Association Name="FK_Anticipo_Empleado">
+          <End Type="NominaModel.Empleado" Role="Empleado" Multiplicity="1" />
+          <End Type="NominaModel.Anticipo" Role="Anticipo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleado">
+              <PropertyRef Name="Id_Empleado" />
+            </Principal>
+            <Dependent Role="Anticipo">
+              <PropertyRef Name="Empleado_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Type="NominaModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -697,131 +690,88 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Empleado_AspUser_AspNetUsers">
+          <End Type="NominaModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="NominaModel.Empleado_AspUser" Role="Empleado_AspUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Empleado_AspUser">
+              <PropertyRef Name="Asp_User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bonificacion_Empleado_Empleado">
+          <End Type="NominaModel.Empleado" Role="Empleado" Multiplicity="1" />
+          <End Type="NominaModel.Bonificacion_Empleado" Role="Bonificacion_Empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleado">
+              <PropertyRef Name="Id_Empleado" />
+            </Principal>
+            <Dependent Role="Bonificacion_Empleado">
+              <PropertyRef Name="Empleado_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Empleado_AspUser_Empleado">
+          <End Type="NominaModel.Empleado" Role="Empleado" Multiplicity="1" />
+          <End Type="NominaModel.Empleado_AspUser" Role="Empleado_AspUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleado">
+              <PropertyRef Name="Id_Empleado" />
+            </Principal>
+            <Dependent Role="Empleado_AspUser">
+              <PropertyRef Name="Empleado_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Empleado_Turno">
+          <End Type="NominaModel.Turno" Role="Turno" Multiplicity="0..1" />
+          <End Type="NominaModel.Empleado" Role="Empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Turno">
+              <PropertyRef Name="Id_Turno" />
+            </Principal>
+            <Dependent Role="Empleado">
+              <PropertyRef Name="Turno_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Permisos_Empleado">
+          <End Type="NominaModel.Empleado" Role="Empleado" Multiplicity="1" />
+          <End Type="NominaModel.Permisos" Role="Permisos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleado">
+              <PropertyRef Name="Id_Empleado" />
+            </Principal>
+            <Dependent Role="Permisos">
+              <PropertyRef Name="Empleado_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vacaciones_Empleado">
+          <End Type="NominaModel.Empleado" Role="Empleado" Multiplicity="1" />
+          <End Type="NominaModel.Vacaciones" Role="Vacaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleado">
+              <PropertyRef Name="Id_Empleado" />
+            </Principal>
+            <Dependent Role="Vacaciones">
+              <PropertyRef Name="Empleado_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="AspNetUserRoles">
           <End Type="NominaModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
           <End Type="NominaModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
         </Association>
-        <Association Name="Empleado_AspUser">
-          <End Type="NominaModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
-          <End Type="NominaModel.Empleado" Role="Empleado" Multiplicity="*" />
-        </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="NominaModelStoreContainer" CdmEntityContainer="NominaEntities">
-          <EntitySetMapping Name="Anticipo">
-            <EntityTypeMapping TypeName="NominaModel.Anticipo">
-              <MappingFragment StoreEntitySet="Anticipo">
-                <ScalarProperty Name="Id_Anticipo" ColumnName="Id_Anticipo" />
-                <ScalarProperty Name="Empleado_Id" ColumnName="Empleado_Id" />
-                <ScalarProperty Name="Monto_Solicitado" ColumnName="Monto_Solicitado" />
-                <ScalarProperty Name="Monto_Aprobado" ColumnName="Monto_Aprobado" />
-                <ScalarProperty Name="Fecha_Solicitud" ColumnName="Fecha_Solicitud" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Fecha_Definicion" ColumnName="Fecha_Definicion" />
-                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Bonificacion_Empleado">
-            <EntityTypeMapping TypeName="NominaModel.Bonificacion_Empleado">
-              <MappingFragment StoreEntitySet="Bonificacion_Empleado">
-                <ScalarProperty Name="Empleado_Id" ColumnName="Empleado_Id" />
-                <ScalarProperty Name="Id_Bonificacion" ColumnName="Id_Bonificacion" />
-                <ScalarProperty Name="Nombre_Hijo" ColumnName="Nombre_Hijo" />
-                <ScalarProperty Name="Fecha_Nacimiento_Hijo" ColumnName="Fecha_Nacimiento_Hijo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Concepto">
-            <EntityTypeMapping TypeName="NominaModel.Concepto">
-              <MappingFragment StoreEntitySet="Concepto">
-                <ScalarProperty Name="Id_Concepto" ColumnName="Id_Concepto" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Empleado">
-            <EntityTypeMapping TypeName="NominaModel.Empleado">
-              <MappingFragment StoreEntitySet="Empleado">
-                <ScalarProperty Name="Id_Empleado" ColumnName="Id_Empleado" />
-                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
-                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
-                <ScalarProperty Name="Nro_Documento" ColumnName="Nro_Documento" />
-                <ScalarProperty Name="Tipo_Documento" ColumnName="Tipo_Documento" />
-                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
-                <ScalarProperty Name="Nro_Telefono" ColumnName="Nro_Telefono" />
-                <ScalarProperty Name="Fecha_Nacimiento" ColumnName="Fecha_Nacimiento" />
-                <ScalarProperty Name="Fecha_Incorporacion" ColumnName="Fecha_Incorporacion" />
-                <ScalarProperty Name="Imagen_Perfil" ColumnName="Imagen_Perfil" />
-                <ScalarProperty Name="Estado_Civil" ColumnName="Estado_Civil" />
-                <ScalarProperty Name="Salario_Basico" ColumnName="Salario_Basico" />
-                <ScalarProperty Name="Turno_Id" ColumnName="Turno_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Parametros_Sistema">
-            <EntityTypeMapping TypeName="NominaModel.Parametros_Sistema">
-              <MappingFragment StoreEntitySet="Parametros_Sistema">
-                <ScalarProperty Name="Id_Parametros" ColumnName="Id_Parametros" />
-                <ScalarProperty Name="Salario_Minimo_Vigente" ColumnName="Salario_Minimo_Vigente" />
-                <ScalarProperty Name="Mes_Anho_Salario_Minimo_Vigente" ColumnName="Mes_Anho_Salario_Minimo_Vigente" />
-                <ScalarProperty Name="Porcentaje_Obrero_IPS" ColumnName="Porcentaje_Obrero_IPS" />
-                <ScalarProperty Name="Porcentaje_Patronal_IPS" ColumnName="Porcentaje_Patronal_IPS" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Permisos">
-            <EntityTypeMapping TypeName="NominaModel.Permisos">
-              <MappingFragment StoreEntitySet="Permisos">
-                <ScalarProperty Name="Id_Permiso" ColumnName="Id_Permiso" />
-                <ScalarProperty Name="Empleado_Id" ColumnName="Empleado_Id" />
-                <ScalarProperty Name="Fecha_Desde" ColumnName="Fecha_Desde" />
-                <ScalarProperty Name="Fecha_Hasta" ColumnName="Fecha_Hasta" />
-                <ScalarProperty Name="Motivo" ColumnName="Motivo" />
-                <ScalarProperty Name="Cantidad_Horas" ColumnName="Cantidad_Horas" />
-                <ScalarProperty Name="Fecha_Solicitud" ColumnName="Fecha_Solicitud" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Turno">
-            <EntityTypeMapping TypeName="NominaModel.Turno">
-              <MappingFragment StoreEntitySet="Turno">
-                <ScalarProperty Name="Id_Turno" ColumnName="Id_Turno" />
-                <ScalarProperty Name="Hora_Entrada" ColumnName="Hora_Entrada" />
-                <ScalarProperty Name="Hora_Salida" ColumnName="Hora_Salida" />
-                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Usuario">
-            <EntityTypeMapping TypeName="NominaModel.Usuario">
-              <MappingFragment StoreEntitySet="Usuario">
-                <ScalarProperty Name="Id_Usuario" ColumnName="Id_Usuario" />
-                <ScalarProperty Name="Usuario1" ColumnName="Usuario" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Vacaciones">
-            <EntityTypeMapping TypeName="NominaModel.Vacaciones">
-              <MappingFragment StoreEntitySet="Vacaciones">
-                <ScalarProperty Name="Id_Vacaciones" ColumnName="Id_Vacaciones" />
-                <ScalarProperty Name="Empleado_Id" ColumnName="Empleado_Id" />
-                <ScalarProperty Name="Fecha_Desde" ColumnName="Fecha_Desde" />
-                <ScalarProperty Name="Fecha_Hasta" ColumnName="Fecha_Hasta" />
-                <ScalarProperty Name="Fecha_Solicitud" ColumnName="Fecha_Solicitud" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Fecha_Definicion" ColumnName="Fecha_Definicion" />
-                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="NominaModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -829,6 +779,20 @@
                 <ScalarProperty Name="Model" ColumnName="Model" />
                 <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
                 <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Anticipo">
+            <EntityTypeMapping TypeName="NominaModel.Anticipo">
+              <MappingFragment StoreEntitySet="Anticipo">
+                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+                <ScalarProperty Name="Fecha_Definicion" ColumnName="Fecha_Definicion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Fecha_Solicitud" ColumnName="Fecha_Solicitud" />
+                <ScalarProperty Name="Monto_Aprobado" ColumnName="Monto_Aprobado" />
+                <ScalarProperty Name="Monto_Solicitado" ColumnName="Monto_Solicitado" />
+                <ScalarProperty Name="Empleado_Id" ColumnName="Empleado_Id" />
+                <ScalarProperty Name="Id_Anticipo" ColumnName="Id_Anticipo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -877,20 +841,131 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Bonificacion_Empleado">
+            <EntityTypeMapping TypeName="NominaModel.Bonificacion_Empleado">
+              <MappingFragment StoreEntitySet="Bonificacion_Empleado">
+                <ScalarProperty Name="Fecha_Nacimiento_Hijo" ColumnName="Fecha_Nacimiento_Hijo" />
+                <ScalarProperty Name="Nombre_Hijo" ColumnName="Nombre_Hijo" />
+                <ScalarProperty Name="Id_Bonificacion" ColumnName="Id_Bonificacion" />
+                <ScalarProperty Name="Empleado_Id" ColumnName="Empleado_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Concepto">
+            <EntityTypeMapping TypeName="NominaModel.Concepto">
+              <MappingFragment StoreEntitySet="Concepto">
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Id_Concepto" ColumnName="Id_Concepto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empleado">
+            <EntityTypeMapping TypeName="NominaModel.Empleado">
+              <MappingFragment StoreEntitySet="Empleado">
+                <ScalarProperty Name="Turno_Id" ColumnName="Turno_Id" />
+                <ScalarProperty Name="Salario_Basico" ColumnName="Salario_Basico" />
+                <ScalarProperty Name="Estado_Civil" ColumnName="Estado_Civil" />
+                <ScalarProperty Name="Imagen_Perfil" ColumnName="Imagen_Perfil" />
+                <ScalarProperty Name="Fecha_Incorporacion" ColumnName="Fecha_Incorporacion" />
+                <ScalarProperty Name="Fecha_Nacimiento" ColumnName="Fecha_Nacimiento" />
+                <ScalarProperty Name="Nro_Telefono" ColumnName="Nro_Telefono" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Tipo_Documento" ColumnName="Tipo_Documento" />
+                <ScalarProperty Name="Nro_Documento" ColumnName="Nro_Documento" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Id_Empleado" ColumnName="Id_Empleado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empleado_AspUser">
+            <EntityTypeMapping TypeName="NominaModel.Empleado_AspUser">
+              <MappingFragment StoreEntitySet="Empleado_AspUser">
+                <ScalarProperty Name="observacion" ColumnName="observacion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="Asp_User_Id" ColumnName="Asp_User_Id" />
+                <ScalarProperty Name="Empleado_Id" ColumnName="Empleado_Id" />
+                <ScalarProperty Name="Id_mapeo" ColumnName="Id_mapeo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parametros_Sistema">
+            <EntityTypeMapping TypeName="NominaModel.Parametros_Sistema">
+              <MappingFragment StoreEntitySet="Parametros_Sistema">
+                <ScalarProperty Name="Porcentaje_Patronal_IPS" ColumnName="Porcentaje_Patronal_IPS" />
+                <ScalarProperty Name="Porcentaje_Obrero_IPS" ColumnName="Porcentaje_Obrero_IPS" />
+                <ScalarProperty Name="Mes_Anho_Salario_Minimo_Vigente" ColumnName="Mes_Anho_Salario_Minimo_Vigente" />
+                <ScalarProperty Name="Salario_Minimo_Vigente" ColumnName="Salario_Minimo_Vigente" />
+                <ScalarProperty Name="Id_Parametros" ColumnName="Id_Parametros" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Permisos">
+            <EntityTypeMapping TypeName="NominaModel.Permisos">
+              <MappingFragment StoreEntitySet="Permisos">
+                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Fecha_Solicitud" ColumnName="Fecha_Solicitud" />
+                <ScalarProperty Name="Cantidad_Horas" ColumnName="Cantidad_Horas" />
+                <ScalarProperty Name="Motivo" ColumnName="Motivo" />
+                <ScalarProperty Name="Fecha_Hasta" ColumnName="Fecha_Hasta" />
+                <ScalarProperty Name="Fecha_Desde" ColumnName="Fecha_Desde" />
+                <ScalarProperty Name="Empleado_Id" ColumnName="Empleado_Id" />
+                <ScalarProperty Name="Id_Permiso" ColumnName="Id_Permiso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="NominaModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Turno">
+            <EntityTypeMapping TypeName="NominaModel.Turno">
+              <MappingFragment StoreEntitySet="Turno">
+                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+                <ScalarProperty Name="Hora_Salida" ColumnName="Hora_Salida" />
+                <ScalarProperty Name="Hora_Entrada" ColumnName="Hora_Entrada" />
+                <ScalarProperty Name="Id_Turno" ColumnName="Id_Turno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="NominaModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Usuario1" ColumnName="Usuario" />
+                <ScalarProperty Name="Id_Usuario" ColumnName="Id_Usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vacaciones">
+            <EntityTypeMapping TypeName="NominaModel.Vacaciones">
+              <MappingFragment StoreEntitySet="Vacaciones">
+                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+                <ScalarProperty Name="Fecha_Definicion" ColumnName="Fecha_Definicion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Fecha_Solicitud" ColumnName="Fecha_Solicitud" />
+                <ScalarProperty Name="Fecha_Hasta" ColumnName="Fecha_Hasta" />
+                <ScalarProperty Name="Fecha_Desde" ColumnName="Fecha_Desde" />
+                <ScalarProperty Name="Empleado_Id" ColumnName="Empleado_Id" />
+                <ScalarProperty Name="Id_Vacaciones" ColumnName="Id_Vacaciones" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <AssociationSetMapping Name="AspNetUserRoles" TypeName="NominaModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetUsers">
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
             <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="Empleado_AspUser" TypeName="NominaModel.Empleado_AspUser" StoreEntitySet="Empleado_AspUser">
-            <EndProperty Name="Empleado">
-              <ScalarProperty Name="Id_Empleado" ColumnName="Empleado_Id" />
-            </EndProperty>
-            <EndProperty Name="AspNetUsers">
-              <ScalarProperty Name="Id" ColumnName="Asp_User_Id" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

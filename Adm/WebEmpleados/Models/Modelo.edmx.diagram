@@ -4,30 +4,33 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="88f6fa3cc663491f89342f0e69fe14c5" Name="Diagram1">
-        <EntityTypeShape EntityType="NominaModel.Anticipo" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="NominaModel.Bonificacion_Empleado" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="NominaModel.Concepto" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NominaModel.Empleado" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="NominaModel.Parametros_Sistema" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NominaModel.Permisos" Width="1.5" PointX="5.25" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NominaModel.Turno" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NominaModel.Usuario" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NominaModel.Vacaciones" Width="1.5" PointX="5.25" PointY="11.375" IsExpanded="true" />
-        <AssociationConnector Association="NominaModel.FK_Anticipo_Empleado" ManuallyRouted="false" />
-        <AssociationConnector Association="NominaModel.FK_Bonificacion_Empleado_Empleado" ManuallyRouted="false" />
-        <AssociationConnector Association="NominaModel.FK_Empleado_Turno" ManuallyRouted="false" />
-        <AssociationConnector Association="NominaModel.FK_Permisos_Empleado" ManuallyRouted="false" />
-        <AssociationConnector Association="NominaModel.FK_Vacaciones_Empleado" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="NominaModel.C__MigrationHistory" Width="1.5" PointX="10.375" PointY="0.75" />
-        <EntityTypeShape EntityType="NominaModel.AspNetRoles" Width="1.5" PointX="7" PointY="8.875" />
-        <EntityTypeShape EntityType="NominaModel.AspNetUserClaims" Width="1.5" PointX="11.875" PointY="7" />
-        <EntityTypeShape EntityType="NominaModel.AspNetUserLogins" Width="1.5" PointX="11.875" PointY="9.75" />
-        <EntityTypeShape EntityType="NominaModel.AspNetUsers" Width="1.5" PointX="9.625" PointY="7.375" />
+      <Diagram DiagramId="88f6fa3cc663491f89342f0e69fe14c5" Name="Diagram1" ZoomLevel="42">
+        <EntityTypeShape EntityType="NominaModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="NominaModel.Anticipo" Width="1.5" PointX="5.25" PointY="16.25" />
+        <EntityTypeShape EntityType="NominaModel.AspNetRoles" Width="1.5" PointX="3.75" PointY="21.75" />
+        <EntityTypeShape EntityType="NominaModel.AspNetUserClaims" Width="1.5" PointX="8.25" PointY="20.25" />
+        <EntityTypeShape EntityType="NominaModel.AspNetUserLogins" Width="1.5" PointX="8.25" PointY="23" />
+        <EntityTypeShape EntityType="NominaModel.AspNetUsers" Width="1.5" PointX="6" PointY="20.5" />
+        <EntityTypeShape EntityType="NominaModel.Bonificacion_Empleado" Width="1.5" PointX="5.25" PointY="3.125" />
+        <EntityTypeShape EntityType="NominaModel.Concepto" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="NominaModel.Empleado" Width="1.5" PointX="3" PointY="7.125" />
+        <EntityTypeShape EntityType="NominaModel.Empleado_AspUser" Width="2.75" PointX="8.25" PointY="8.375" />
+        <EntityTypeShape EntityType="NominaModel.Parametros_Sistema" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="NominaModel.Permisos" Width="1.5" PointX="5.25" PointY="12.5" />
+        <EntityTypeShape EntityType="NominaModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="NominaModel.Turno" Width="1.5" PointX="0.75" PointY="8.5" />
+        <EntityTypeShape EntityType="NominaModel.Usuario" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="NominaModel.Vacaciones" Width="1.5" PointX="5.25" PointY="9" />
+        <AssociationConnector Association="NominaModel.FK_Anticipo_Empleado" />
         <AssociationConnector Association="NominaModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="NominaModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="NominaModel.FK_Empleado_AspUser_AspNetUsers" />
+        <AssociationConnector Association="NominaModel.FK_Bonificacion_Empleado_Empleado" />
+        <AssociationConnector Association="NominaModel.FK_Empleado_AspUser_Empleado" />
+        <AssociationConnector Association="NominaModel.FK_Empleado_Turno" />
+        <AssociationConnector Association="NominaModel.FK_Permisos_Empleado" />
+        <AssociationConnector Association="NominaModel.FK_Vacaciones_Empleado" />
         <AssociationConnector Association="NominaModel.AspNetUserRoles" />
-        <AssociationConnector Association="NominaModel.Empleado_AspUser" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
