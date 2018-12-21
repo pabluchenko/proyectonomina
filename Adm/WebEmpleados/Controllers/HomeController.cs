@@ -22,6 +22,7 @@ namespace WebEmpleados.Controllers
 
         public ActionResult About()
         {
+            //Código para obtener el objeto empleado a partir del id del usuario logueado, NO OLVIDAR EL USING correspondiente!
             try
             {
                 string userID = User.Identity.GetUserId();
