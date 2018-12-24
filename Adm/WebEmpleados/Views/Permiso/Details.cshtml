@@ -1,0 +1,84 @@
+﻿@model WebEmpleados.Models.Permisos
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Permisos</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha_Desde)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha_Desde)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha_Hasta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha_Hasta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Motivo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Motivo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cantidad_Horas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cantidad_Horas)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha_Solicitud)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha_Solicitud)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Observaciones)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Observaciones)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Empleado.Nombres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Empleado.Nombres)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    <!--
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id_Permiso }) |
+        -->
+    @Html.ActionLink("Back to List", "Index")
+</p>
