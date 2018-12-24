@@ -13,9 +13,9 @@
           <Property Name="Empleado_Id" Type="int" Nullable="false" />
           <Property Name="Monto_Solicitado" Type="int" Nullable="false" />
           <Property Name="Monto_Aprobado" Type="int" Nullable="false" />
-          <Property Name="Fecha_Solicitud" Type="date" Nullable="false" />
+          <Property Name="Fecha_Solicitud" Type="datetime" Nullable="false" />
           <Property Name="Estado" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Fecha_Definicion" Type="date" />
+          <Property Name="Fecha_Definicion" Type="datetime" />
           <Property Name="Observaciones" Type="varchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="Bonificacion_Empleado">
@@ -47,8 +47,8 @@
           <Property Name="Tipo_Documento" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Direccion" Type="varchar" MaxLength="255" />
           <Property Name="Nro_Telefono" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="Fecha_Nacimiento" Type="date" Nullable="false" />
-          <Property Name="Fecha_Incorporacion" Type="date" />
+          <Property Name="Fecha_Nacimiento" Type="datetime" Nullable="false" />
+          <Property Name="Fecha_Incorporacion" Type="datetime" />
           <Property Name="Imagen_Perfil" Type="varchar" MaxLength="1000" />
           <Property Name="Estado_Civil" Type="varchar" MaxLength="50" />
           <Property Name="Salario_Basico" Type="int" Nullable="false" />
@@ -70,11 +70,11 @@
           </Key>
           <Property Name="Id_Permiso" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Empleado_Id" Type="int" Nullable="false" />
-          <Property Name="Fecha_Desde" Type="date" Nullable="false" />
-          <Property Name="Fecha_Hasta" Type="date" Nullable="false" />
+          <Property Name="Fecha_Desde" Type="datetime" Nullable="false" />
+          <Property Name="Fecha_Hasta" Type="datetime" Nullable="false" />
           <Property Name="Motivo" Type="varchar" MaxLength="1000" Nullable="false" />
           <Property Name="Cantidad_Horas" Type="int" Nullable="false" />
-          <Property Name="Fecha_Solicitud" Type="date" Nullable="false" />
+          <Property Name="Fecha_Solicitud" Type="datetime" Nullable="false" />
           <Property Name="Estado" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Observaciones" Type="varchar" MaxLength="1000" />
         </EntityType>
@@ -92,7 +92,7 @@
             <PropertyRef Name="Id_Usuario" />
           </Key>
           <Property Name="Id_Usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Usuario" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Usuario1" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="1000" Nullable="false" />
         </EntityType>
         <EntityType Name="Vacaciones">
@@ -101,11 +101,11 @@
           </Key>
           <Property Name="Id_Vacaciones" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Empleado_Id" Type="int" Nullable="false" />
-          <Property Name="Fecha_Desde" Type="date" Nullable="false" />
-          <Property Name="Fecha_Hasta" Type="date" Nullable="false" />
-          <Property Name="Fecha_Solicitud" Type="date" Nullable="false" />
+          <Property Name="Fecha_Desde" Type="datetime" Nullable="false" />
+          <Property Name="Fecha_Hasta" Type="datetime" Nullable="false" />
+          <Property Name="Fecha_Solicitud" Type="datetime" Nullable="false" />
           <Property Name="Estado" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Fecha_Definicion" Type="date" Nullable="false" />
+          <Property Name="Fecha_Definicion" Type="datetime" Nullable="false" />
           <Property Name="Observaciones" Type="varchar" MaxLength="1000" />
         </EntityType>
         <Association Name="FK_Anticipo_Empleado">
@@ -211,9 +211,9 @@
           <Property Name="Empleado_Id" Type="Int32" Nullable="false" />
           <Property Name="Monto_Solicitado" Type="Int32" Nullable="false" />
           <Property Name="Monto_Aprobado" Type="Int32" Nullable="false" />
-          <Property Name="Fecha_Solicitud" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Fecha_Solicitud" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Fecha_Definicion" Type="DateTime" Precision="0" />
+          <Property Name="Fecha_Definicion" Type="DateTime" Precision="3" />
           <Property Name="Observaciones" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Empleado" Relationship="Self.FK_Anticipo_Empleado" FromRole="Anticipo" ToRole="Empleado" />
         </EntityType>
@@ -236,8 +236,8 @@
           <Property Name="Tipo_Documento" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Direccion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Nro_Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Fecha_Nacimiento" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Fecha_Incorporacion" Type="DateTime" Precision="0" />
+          <Property Name="Fecha_Nacimiento" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Fecha_Incorporacion" Type="DateTime" Precision="3" />
           <Property Name="Imagen_Perfil" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="Estado_Civil" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Salario_Basico" Type="Int32" Nullable="false" />
@@ -254,11 +254,11 @@
           </Key>
           <Property Name="Id_Permiso" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Empleado_Id" Type="Int32" Nullable="false" />
-          <Property Name="Fecha_Desde" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Fecha_Hasta" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Fecha_Desde" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Fecha_Hasta" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Motivo" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Cantidad_Horas" Type="Int32" Nullable="false" />
-          <Property Name="Fecha_Solicitud" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Fecha_Solicitud" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Observaciones" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Empleado" Relationship="Self.FK_Permisos_Empleado" FromRole="Permisos" ToRole="Empleado" />
@@ -273,25 +273,17 @@
           <Property Name="Observaciones" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Empleado" Relationship="NominaModel.FK_Empleado_Turno" FromRole="Turno" ToRole="Empleado" />
         </EntityType>
-        <EntityType Name="Usuario">
-          <Key>
-            <PropertyRef Name="Id_Usuario" />
-          </Key>
-          <Property Name="Id_Usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Usuario1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
-        </EntityType>
         <EntityType Name="Vacaciones">
           <Key>
             <PropertyRef Name="Id_Vacaciones" />
           </Key>
           <Property Name="Id_Vacaciones" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Empleado_Id" Type="Int32" Nullable="false" />
-          <Property Name="Fecha_Desde" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Fecha_Hasta" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Fecha_Solicitud" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Fecha_Desde" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Fecha_Hasta" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Fecha_Solicitud" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Fecha_Definicion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Fecha_Definicion" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Observaciones" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Empleado" Relationship="Self.FK_Vacaciones_Empleado" FromRole="Vacaciones" ToRole="Empleado" />
         </EntityType>
@@ -337,7 +329,6 @@
           <EntitySet Name="Empleado" EntityType="Self.Empleado" />
           <EntitySet Name="Permisos" EntityType="Self.Permisos" />
           <EntitySet Name="Turno" EntityType="Self.Turno" />
-          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
           <EntitySet Name="Vacaciones" EntityType="Self.Vacaciones" />
           <AssociationSet Name="FK_Anticipo_Empleado" Association="Self.FK_Anticipo_Empleado">
             <End Role="Empleado" EntitySet="Empleado" />
@@ -361,6 +352,7 @@
             <End Role="Turno" EntitySet="Turno" />
             <End Role="Empleado" EntitySet="Empleado" />
           </AssociationSet>
+          <EntitySet Name="Usuario" EntityType="NominaModel.Usuario" />
         </EntityContainer>
         <EntityType Name="Bonificacion_Empleado">
           <Key>
@@ -407,6 +399,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id_Usuario" />
+          </Key>
+          <Property Name="Id_Usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Usuario1" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -480,15 +480,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Usuario">
-            <EntityTypeMapping TypeName="NominaModel.Usuario">
-              <MappingFragment StoreEntitySet="Usuario">
-                <ScalarProperty Name="Id_Usuario" ColumnName="Id_Usuario" />
-                <ScalarProperty Name="Usuario1" ColumnName="Usuario" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Vacaciones">
             <EntityTypeMapping TypeName="NominaModel.Vacaciones">
               <MappingFragment StoreEntitySet="Vacaciones">
@@ -521,6 +512,15 @@
                 <ScalarProperty Name="Porcentaje_Obrero_IPS" ColumnName="Porcentaje_Obrero_IPS" />
                 <ScalarProperty Name="Mes_Anho_Salario_Minimo_Vigente" ColumnName="Mes_Anho_Salario_Minimo_Vigente" />
                 <ScalarProperty Name="Salario_Minimo_Vigente" ColumnName="Salario_Minimo_Vigente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="NominaModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Usuario1" ColumnName="Usuario1" />
+                <ScalarProperty Name="Id_Usuario" ColumnName="Id_Usuario" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
